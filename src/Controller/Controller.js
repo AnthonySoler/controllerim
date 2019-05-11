@@ -20,7 +20,7 @@ export class Controller {
     return staticGetParentController(controllerName, componentInstance, parentControllerName);
   }
 
-  constructor(componentInstance) {
+  constructor(componentInstance, name) {
     if (!componentInstance) {
       throw new Error(`Component instance is undefined. Make sure that you pass a refernce to the compoenent when you initialize the controller and that you are calling 'super(componentInstance)' inside your controller constructor`);
     }
@@ -34,7 +34,7 @@ export class Controller {
     const privateScope = {
       gettersAndSetters: {},
       controllerId: uniqueId(),
-      controllerName: this.constructor.name === 'Controller' ? getAnonymousControllerName(componentInstance) : this.constructor.name,
+      controllerName: this.constructor.name === 'Controller' ? getAnonymousControllerName(componentInstance) : (name ? name : this.constructor.name),
       stateTree: undefined,
       internalState: { methodUsingState: undefined, previousState: undefined, initialState: undefined },
       component: componentInstance
